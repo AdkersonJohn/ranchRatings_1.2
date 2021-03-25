@@ -8,7 +8,7 @@ import com.example.ranchratings_12.service.InstitutionService
 class MainViewModel : ViewModel() {
 
 
-    var institutions: MutableLiveData<ArrayList<Institution>> = MutableLiveData<ArrayList<Institution>>()
+    private var _institutions: MutableLiveData<ArrayList<Institution>> = MutableLiveData<ArrayList<Institution>>()
     var institutionService: InstitutionService = InstitutionService()
 
     init {
@@ -16,7 +16,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun fetchInstitutions(institutionName: String) {
-        institutions = institutionService.fetchInstitutions(institutionName)
+        _institutions = institutionService.fetchInstitutions(institutionName)
     }
-    // TODO: Implement the ViewModel
+
+    var institutions:MutableLiveData<ArrayList<Institution>>
+        get(){return _institutions}
+        set(value) {_institutions = value}
 }
