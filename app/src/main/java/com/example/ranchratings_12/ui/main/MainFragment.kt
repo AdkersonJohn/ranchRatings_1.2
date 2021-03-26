@@ -6,21 +6,28 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.ranchratings_12.R
 import kotlinx.android.synthetic.main.main_fragment01.*
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainFragment : Fragment() {
 
+    private val SAVE_IMAGE_REQUEST_CODE: Int = 1999
     private val CAMERA_REQUEST_CODE = 1998
     val CAMERA_PERMISSION_REQUEST_CODE = 1997
+    private lateinit var currentPhotoPath: String
 
     companion object {
         fun newInstance() = MainFragment()
@@ -37,6 +44,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //still need to create JSON to populate autocomplete search bar
       /*  viewModel = ViewModelProvider(this).get(MainViewModel::class.java)*/
       /*  viewModel.institutions.observe(this, Observer{
             institutions -> actInstitutionName.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, institutions))
@@ -76,9 +84,18 @@ class MainFragment : Fragment() {
     }
     private fun takePhoto() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
-            takePictureIntent -> takePictureIntent.resolveActivity(context!!.packageManager)?.also {
-            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
-        }
+            takePictureIntent -> takePictureIntent.resolveActivity(context!!.packageManager)
+            if(takePictureIntent == null){
+                Toast.makeText(context, "Unable to save photo", Toast.LENGTH_LONG).show()
+        }else{
+                //if we are here we have a valid intent
+                val photoFile:File = createImageFile()
+                photoFile?.also{
+                    val photoURI = FileProvider.getUriForFile(activity!!.applicationContext, "com.ranchratings_12.android.fileprovider", it)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+                    startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
+                }
+            }
         }
     }
 
@@ -90,8 +107,22 @@ class MainFragment : Fragment() {
                 //now we can get the thumbnail
                 val imageBitmap = data!!.extras!!.get("data") as Bitmap
                 imgFood.setImageBitmap(imageBitmap)
+            }else if(requestCode == SAVE_IMAGE_REQUEST_CODE){
+                    Toast.makeText(context, "Image Saved", Toast.LENGTH_LONG).show()
             }
         }
     }
+
+    private fun createImageFile(): File {
+        //generate a new filename with the date
+        val timestamp: String = SimpleDateFormat("yyyMMdd_HHmmss").format(Date())
+        //get access to the directory where we can write pictures
+        val storageDir:File? = context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("RanchRatings${timestamp}", ".jpg", storageDir).apply {
+            currentPhotoPath = absolutePath
+        }
+
+    }
+
 
 }
