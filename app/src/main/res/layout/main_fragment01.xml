@@ -10,6 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary_dark"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,34 +18,37 @@
 
         <TextView
             android:id="@+id/txtHeader"
-            android:layout_width="238dp"
-            android:layout_height="83dp"
-            android:layout_weight="1"
-            android:background="@color/primary_light"
-            android:padding="20dp"
-            android:text="Ranch Ratings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:background="@color/primary_dark"
+            android:paddingLeft="10dp"
+            android:text="@string/main_heading"
             android:textColor="#FFFFFF"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnSearch"
-            android:layout_width="83dp"
+            android:layout_width="wrap_content"
             android:layout_height="83dp"
             android:layout_weight="1"
-            android:background="#00FFFFFF"
+            android:background="@color/primary_dark"
+            android:contentDescription="clip art of magnifying glass"
             app:layout_constraintStart_toEndOf="@+id/txtHeader"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_search" />
 
         <ImageButton
             android:id="@+id/btnProfile"
-            android:layout_width="83dp"
+            android:layout_width="wrap_content"
             android:layout_height="83dp"
             android:layout_weight="1"
-            android:background="#00FFFFFF"
+            android:background="@color/primary_dark"
+            android:contentDescription="clipart of person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSearch"
             app:layout_constraintTop_toTopOf="parent"
@@ -52,18 +56,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageButton
             android:id="@+id/btnAddReview"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:contentDescription="Plus symbol"
             app:srcCompat="@android:drawable/ic_input_add" />
 
         <ImageView
@@ -75,7 +78,12 @@
         <TextView
             android:id="@+id/txtReview2"
             android:layout_width="match_parent"
-            android:layout_height="264dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/primary_dark"
             android:hint="Enter Review here..."
             android:textSize="20sp" />
 
@@ -84,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
             android:stepSize="0.5" />
 
         <LinearLayout
@@ -93,31 +102,50 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/btnBack1"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/primary_dark"
+                android:contentDescription="back arrow"
+                app:srcCompat="@drawable/ic_return" />
+
+            <ImageButton
                 android:id="@+id/btnTakePhoto"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                app:srcCompat="@android:drawable/ic_menu_camera" />
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/primary_dark"
+                android:contentDescription="clipart of camera"
+                app:srcCompat="@drawable/ic_camera" />
 
             <ImageButton
                 android:id="@+id/btnSave"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                app:srcCompat="@android:drawable/ic_menu_save" />
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/primary_dark"
+                android:contentDescription="clipart of floppy disc"
+                app:srcCompat="@drawable/ic_save" />
 
-            <ImageButton
-                android:id="@+id/btnBack1"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                app:srcCompat="?attr/actionModeCloseDrawable" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnWhatsGood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="true"
-            android:text="See What's Good"
-            android:textStyle="bold" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnWhatsGood"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:includeFontPadding="true"
+        android:paddingBottom="0dp"
+        android:text="@string/main_see_more"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
