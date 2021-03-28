@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ranchRatings_1.2</string>
+    <string name="profile_heading">Profile</string>
+    <string name="profile_greeting">Welcome, Please siign in</string>
+    <string name="profile_sign_in">sign in</string>
+    <string name="profile_create_account">Create Account</string>
 </resources>
