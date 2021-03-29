@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.example.ranchratings_12.R
+import com.example.ranchratings_12.dtos.Review
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -99,6 +100,21 @@ class MainFragment : Fragment() {
         }
 
         prepRequestLocationUpdates()
+        btnSave.setOnClickListener(){
+            saveReview()
+        }
+
+    }
+
+    private fun saveReview() {
+        var review = Review().apply{
+            latitude = txtLatitude.text.toString()
+            longitutde = txtLongitude.text.toString()
+            institutionName = txtInstitutionName.text.toString()
+            reviewText = txtReview2.text.toString()
+            rating = ratingBar2.numStars.toDouble()
+
+        }
     }
 
     private fun prepRequestLocationUpdates() {
