@@ -108,4 +108,19 @@
         app:layout_constraintTop_toBottomOf="@+id/txtHeader"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <TextView
+        android:id="@+id/txtLatitude"
+        android:layout_width="84dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgFood"
+        app:layout_constraintStart_toEndOf="@+id/txtLongitude"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
+
+    <TextView
+        android:id="@+id/txtLongitude"
+        android:layout_width="84dp"
+        android:layout_height="45dp"
+        app:layout_constraintStart_toEndOf="@+id/btnAddReview"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
