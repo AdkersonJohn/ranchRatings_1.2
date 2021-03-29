@@ -12,6 +12,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -65,6 +67,37 @@ class MainFragment : Fragment() {
         btnProfile.setOnClickListener(){
             prepOpenImageGallery()
         }
+        btnAddReview.setOnClickListener(){
+            imgFood.visibility = VISIBLE
+            txtReview2.visibility = VISIBLE
+            ratingBar2.visibility = VISIBLE
+            btnBack1.visibility = VISIBLE
+            btnTakePhoto.visibility = VISIBLE
+            btnSave.visibility = VISIBLE
+            txtLatitude.visibility = VISIBLE
+            txtLongitude.visibility = VISIBLE
+            txtAddReview.visibility = INVISIBLE
+            btnAddReview.visibility = INVISIBLE
+            txtInstitutionName.visibility = VISIBLE
+            btnSearch.visibility = INVISIBLE
+            btnProfile. visibility = INVISIBLE
+        }
+        btnBack1.setOnClickListener(){
+            imgFood.visibility = INVISIBLE
+            txtReview2.visibility = INVISIBLE
+            ratingBar2.visibility = INVISIBLE
+            btnBack1.visibility = INVISIBLE
+            btnTakePhoto.visibility = INVISIBLE
+            btnSave.visibility = INVISIBLE
+            txtLatitude.visibility = INVISIBLE
+            txtLongitude.visibility = INVISIBLE
+            txtAddReview.visibility = VISIBLE
+            btnAddReview.visibility = VISIBLE
+            txtInstitutionName.visibility = INVISIBLE
+            btnSearch.visibility = VISIBLE
+            btnProfile. visibility = VISIBLE
+        }
+
         prepRequestLocationUpdates()
     }
 
