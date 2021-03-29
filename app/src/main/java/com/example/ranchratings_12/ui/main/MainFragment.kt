@@ -5,6 +5,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -12,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -24,6 +27,7 @@ import java.util.*
 
 class MainFragment : Fragment() {
 
+    private val IMAGE_GALLERY_REQUEST_CODE: Int = 2001
     private val SAVE_IMAGE_REQUEST_CODE: Int = 1999
     private val CAMERA_REQUEST_CODE = 1998
     val CAMERA_PERMISSION_REQUEST_CODE = 1997
@@ -51,6 +55,16 @@ class MainFragment : Fragment() {
         })*/
         btnTakePhoto.setOnClickListener {
             prepTakePhoto()
+        }
+        btnProfile.setOnClickListener(){
+            prepOpenImageGallery()
+        }
+    }
+
+    private fun prepOpenImageGallery() {
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply{
+            this.type = "image/*"
+            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
         }
     }
 
@@ -100,6 +114,7 @@ class MainFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK){
@@ -109,6 +124,13 @@ class MainFragment : Fragment() {
                 imgFood.setImageBitmap(imageBitmap)
             }else if(requestCode == SAVE_IMAGE_REQUEST_CODE){
                     Toast.makeText(context, "Image Saved", Toast.LENGTH_LONG).show()
+            }else if (requestCode == IMAGE_GALLERY_REQUEST_CODE){
+                if (data != null && data.data != null){
+                    val image = data.data
+                    val source = ImageDecoder.createSource(activity!!.contentResolver, image!!)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+                            imgFood.setImageBitmap(bitmap)
+                }
             }
         }
     }
