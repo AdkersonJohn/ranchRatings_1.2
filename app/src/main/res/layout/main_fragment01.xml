@@ -148,4 +148,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+    <ImageView
+        android:id="@+id/imgFood"
+        android:layout_width="121dp"
+        android:layout_height="117dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        app:srcCompat="@android:drawable/ic_menu_mapmode" />
+
+    <ImageButton
+        android:id="@+id/btnProfile"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSearch"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+    <ImageButton
+        android:id="@+id/btnAddReview"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtReview2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/txtLatitude"
+        android:layout_width="84dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgFood"
+        app:layout_constraintStart_toEndOf="@+id/txtLongitude"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
+
+    <TextView
+        android:id="@+id/txtLongitude"
+        android:layout_width="84dp"
+        android:layout_height="45dp"
+        app:layout_constraintStart_toEndOf="@+id/btnAddReview"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
