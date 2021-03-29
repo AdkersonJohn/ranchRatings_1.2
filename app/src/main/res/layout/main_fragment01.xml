@@ -6,12 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/primary_light">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_dark"
-        android:orientation="horizontal"
+
+    <TextView
+        android:id="@+id/txtReview2"
+        android:layout_width="395dp"
+        android:layout_height="264dp"
+        android:clickable="true"
+        android:editable="true"
+        android:hint="Enter Review here..."
+        android:inputType="textAutoCorrect"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar2"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -59,33 +66,39 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        android:stepSize="0.5"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnTakePhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btnAddReview"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:contentDescription="Plus symbol"
-            app:srcCompat="@android:drawable/ic_input_add" />
+    <ImageButton
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnWhatsGood"
+        app:layout_constraintEnd_toStartOf="@+id/btnSave"
+        app:layout_constraintStart_toEndOf="@+id/btnBack1"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
-        <ImageView
-            android:id="@+id/imgFood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_mapmode" />
+    <ImageButton
+        android:id="@+id/btnSave"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnWhatsGood"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
-        <TextView
-            android:id="@+id/txtReview2"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/primary_dark"
-            android:hint="Enter Review here..."
-            android:textSize="20sp" />
+    <ImageButton
+        android:id="@+id/btnBack1"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnWhatsGood"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <RatingBar
             android:id="@+id/ratingBar2"
@@ -151,8 +164,9 @@
 
     <ImageView
         android:id="@+id/imgFood"
-        android:layout_width="121dp"
-        android:layout_height="117dp"
+        android:layout_width="89dp"
+        android:layout_height="73dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtHeader"
         app:srcCompat="@android:drawable/ic_menu_mapmode" />
@@ -179,6 +193,7 @@
         android:id="@+id/txtLatitude"
         android:layout_width="84dp"
         android:layout_height="45dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/imgFood"
         app:layout_constraintStart_toEndOf="@+id/txtLongitude"
         app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
@@ -187,8 +202,35 @@
         android:id="@+id/txtLongitude"
         android:layout_width="84dp"
         android:layout_height="45dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/btnAddReview"
         app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+
+    <TextView
+        android:id="@+id/txtAddReview"
+        android:layout_width="186dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="Add Review"
+        android:textSize="30sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/txtReview2"
+        app:layout_constraintStart_toEndOf="@+id/btnAddReview"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <EditText
+        android:id="@+id/txtInstitutionName"
+        android:layout_width="171dp"
+        android:layout_height="83dp"
+        android:clickable="true"
+        android:ems="10"
+        android:hint="Enter Institution...."
+        android:inputType="textAutoCorrect|textPersonName"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -23,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.example.ranchratings_12.R
+import com.example.ranchratings_12.dtos.Review
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -65,7 +68,53 @@ class MainFragment : Fragment() {
         btnProfile.setOnClickListener(){
             prepOpenImageGallery()
         }
+        btnAddReview.setOnClickListener(){
+            imgFood.visibility = VISIBLE
+            txtReview2.visibility = VISIBLE
+            ratingBar2.visibility = VISIBLE
+            btnBack1.visibility = VISIBLE
+            btnTakePhoto.visibility = VISIBLE
+            btnSave.visibility = VISIBLE
+            txtLatitude.visibility = VISIBLE
+            txtLongitude.visibility = VISIBLE
+            txtAddReview.visibility = INVISIBLE
+            btnAddReview.visibility = INVISIBLE
+            txtInstitutionName.visibility = VISIBLE
+            btnSearch.visibility = INVISIBLE
+            btnProfile. visibility = INVISIBLE
+        }
+        btnBack1.setOnClickListener(){
+            imgFood.visibility = INVISIBLE
+            txtReview2.visibility = INVISIBLE
+            ratingBar2.visibility = INVISIBLE
+            btnBack1.visibility = INVISIBLE
+            btnTakePhoto.visibility = INVISIBLE
+            btnSave.visibility = INVISIBLE
+            txtLatitude.visibility = INVISIBLE
+            txtLongitude.visibility = INVISIBLE
+            txtAddReview.visibility = VISIBLE
+            btnAddReview.visibility = VISIBLE
+            txtInstitutionName.visibility = INVISIBLE
+            btnSearch.visibility = VISIBLE
+            btnProfile. visibility = VISIBLE
+        }
+
         prepRequestLocationUpdates()
+        btnSave.setOnClickListener(){
+            saveReview()
+        }
+
+    }
+
+    private fun saveReview() {
+        var review = Review().apply{
+            latitude = txtLatitude.text.toString()
+            longitutde = txtLongitude.text.toString()
+            institutionName = txtInstitutionName.text.toString()
+            reviewText = txtReview2.text.toString()
+            rating = ratingBar2.numStars.toDouble()
+
+        }
     }
 
     private fun prepRequestLocationUpdates() {
