@@ -17,13 +17,10 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import com.example.ranchratings_12.R
 import com.example.ranchratings_12.dtos.Review
 import kotlinx.android.synthetic.main.main_fragment01.*
@@ -183,7 +180,7 @@ class MainFragment : Fragment() {
             takePictureIntent -> takePictureIntent.resolveActivity(context!!.packageManager)
             if(takePictureIntent == null){
                 Toast.makeText(context, "Unable to save photo", Toast.LENGTH_LONG).show()
-        }else{
+            } else {
                 //if we are here we have a valid intent
                 val photoFile:File = createImageFile()
                 photoFile?.also{
