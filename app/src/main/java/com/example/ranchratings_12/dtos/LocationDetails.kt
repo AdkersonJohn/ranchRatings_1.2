@@ -1,5 +1,7 @@
 package com.example.ranchratings_12.dtos
 
-data class LocationDetails (val longitude: String, val latitude: String) {
-
+/**
+ * Stores coordinates of the institution location for the GPS.
+ */
+data class LocationDetails (val longitude: String, val latitude: String){
 }
