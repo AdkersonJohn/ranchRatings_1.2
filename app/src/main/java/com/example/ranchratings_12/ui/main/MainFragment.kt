@@ -108,9 +108,6 @@ class MainFragment : Fragment() {
 
     private fun saveReview() {
         var review = Review().apply{
-            latitude = txtLatitude.text.toString()
-            longitutde = txtLongitude.text.toString()
-            institutionName = txtInstitutionName.text.toString()
             reviewText = txtReview2.text.toString()
             rating = ratingBar2.numStars.toDouble()
 
