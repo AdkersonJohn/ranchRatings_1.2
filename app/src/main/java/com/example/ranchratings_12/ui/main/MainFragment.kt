@@ -62,45 +62,39 @@ class MainFragment : Fragment() {
         btnTakePhoto.setOnClickListener {
             prepTakePhoto()
         }
-        btnProfile.setOnClickListener(){
+        btnProfile.setOnClickListener() {
             prepOpenImageGallery()
         }
-        btnAddReview.setOnClickListener(){
-            imgFood.visibility = VISIBLE
-            txtReview2.visibility = VISIBLE
-            ratingBar2.visibility = VISIBLE
-            btnBack1.visibility = VISIBLE
-            btnTakePhoto.visibility = VISIBLE
-            btnSave.visibility = VISIBLE
-            txtLatitude.visibility = VISIBLE
-            txtLongitude.visibility = VISIBLE
-            txtAddReview.visibility = INVISIBLE
-            btnAddReview.visibility = INVISIBLE
-            txtInstitutionName.visibility = VISIBLE
-            btnSearch.visibility = INVISIBLE
-            btnProfile. visibility = INVISIBLE
+        btnAddReview.setOnClickListener() {
+            //Show review UI elements
+            setVisibility(VISIBLE, INVISIBLE)
         }
-        btnBack1.setOnClickListener(){
-            imgFood.visibility = INVISIBLE
-            txtReview2.visibility = INVISIBLE
-            ratingBar2.visibility = INVISIBLE
-            btnBack1.visibility = INVISIBLE
-            btnTakePhoto.visibility = INVISIBLE
-            btnSave.visibility = INVISIBLE
-            txtLatitude.visibility = INVISIBLE
-            txtLongitude.visibility = INVISIBLE
-            txtAddReview.visibility = VISIBLE
-            btnAddReview.visibility = VISIBLE
-            txtInstitutionName.visibility = INVISIBLE
-            btnSearch.visibility = VISIBLE
-            btnProfile. visibility = VISIBLE
+        btnBack1.setOnClickListener() {
+            //Restore home/main screen UI elements
+            setVisibility(INVISIBLE, VISIBLE)
         }
 
         prepRequestLocationUpdates()
-        btnSave.setOnClickListener(){
+        btnSave.setOnClickListener() {
             saveReview()
         }
 
+    }
+
+    private fun setVisibility (review: Int, home: Int) {
+        imgFood.visibility = review
+        txtReview2.visibility = review
+        ratingBar2.visibility = review
+        btnBack1.visibility = review
+        btnTakePhoto.visibility = review
+        btnSave.visibility = review
+        txtLatitude.visibility = review
+        txtLongitude.visibility = review
+        txtAddReview.visibility = home
+        btnAddReview.visibility = home
+        txtInstitutionName.visibility = review
+        btnSearch.visibility = home
+        btnProfile.visibility = home
     }
 
     private fun saveReview() {
@@ -144,7 +138,7 @@ class MainFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
             takePhoto()
         }else{
-            val permissionRequest = arrayOf(Manifest.permission.CAMERA);
+            val permissionRequest = arrayOf(Manifest.permission.CAMERA)
             requestPermissions(permissionRequest, CAMERA_PERMISSION_REQUEST_CODE)
         }
     }
