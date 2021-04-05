@@ -1,7 +1,7 @@
 package com.example.ranchratings_12.dtos
 
 /**
- * Stores coordinates of the institution location for the GPS.
+ * Stores the [longitude] and [latitude] of a location for the GPS.
  */
 data class LocationDetails (val longitude: String, val latitude: String) {
 
