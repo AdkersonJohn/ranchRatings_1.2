@@ -13,10 +13,10 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.ContentView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
@@ -29,6 +29,7 @@ import com.example.ranchratings_12.R
 import com.example.ranchratings_12.dtos.Review
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -112,6 +113,7 @@ class MainFragment : Fragment() {
             saveReview()
         }
 
+
     }
 
     private fun saveReview() {
@@ -124,6 +126,7 @@ class MainFragment : Fragment() {
             userID
         }
         save(review)
+
     }
 
     private fun save(review: Review) {
