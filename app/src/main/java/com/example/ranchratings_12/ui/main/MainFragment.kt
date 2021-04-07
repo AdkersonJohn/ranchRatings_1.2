@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -26,6 +27,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.example.ranchratings_12.R
 import com.example.ranchratings_12.dtos.Review
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -39,10 +42,15 @@ class MainFragment : Fragment() {
     private val CAMERA_REQUEST_CODE = 1998
     private val CAMERA_PERMISSION_REQUEST_CODE = 1997
     private val LOCATION_PERMISSION_REQUEST_CODE = 2000
+    private lateinit var firestore : FirebaseFirestore
     private lateinit var currentPhotoPath: String
 
     companion object {
         fun newInstance() = MainFragment()
+    }
+    init{
+        firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
     private lateinit var viewModel: MainViewModel
@@ -113,8 +121,21 @@ class MainFragment : Fragment() {
             institutionName = txtInstitutionName.text.toString()
             reviewText = txtReview2.text.toString()
             rating = ratingBar2.numStars.toDouble()
-
+            userID
         }
+        save(review)
+    }
+
+    private fun save(review: Review) {
+        firestore.collection("reviews")
+            .document()
+            .set(review)
+            .addOnSuccessListener {
+                Log.d("Firebase", "Document saved")
+            }
+            .addOnFailureListener{
+                Log.d( "Firebase", "Save Failed")
+            }
     }
 
     private fun prepRequestLocationUpdates() {
