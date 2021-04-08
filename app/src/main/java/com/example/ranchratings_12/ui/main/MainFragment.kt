@@ -13,23 +13,22 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.ContentView
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import com.example.ranchratings_12.R
 import com.example.ranchratings_12.dtos.Review
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -43,8 +42,11 @@ class MainFragment : Fragment() {
     private val CAMERA_REQUEST_CODE = 1998
     private val CAMERA_PERMISSION_REQUEST_CODE = 1997
     private val LOCATION_PERMISSION_REQUEST_CODE = 2000
-    private lateinit var firestore : FirebaseFirestore
+    private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var currentPhotoPath: String
+    private val AUTH_REQUEST_CODE = 2002
+    private var user : FirebaseUser? = null
+
 
     companion object {
         fun newInstance() = MainFragment()
@@ -90,7 +92,8 @@ class MainFragment : Fragment() {
             btnAddReview.visibility = INVISIBLE
             txtInstitutionName.visibility = VISIBLE
             btnSearch.visibility = INVISIBLE
-            btnProfile. visibility = INVISIBLE
+            btnProfile.visibility = INVISIBLE
+            spnReviews.visibility = INVISIBLE
         }
         btnBack1.setOnClickListener(){
             imgFood.visibility = INVISIBLE
@@ -106,14 +109,28 @@ class MainFragment : Fragment() {
             txtInstitutionName.visibility = INVISIBLE
             btnSearch.visibility = VISIBLE
             btnProfile. visibility = VISIBLE
+            spnReviews.visibility = VISIBLE
         }
 
         prepRequestLocationUpdates()
         btnSave.setOnClickListener(){
             saveReview()
         }
+        btnProfile.setOnClickListener(){
+            logon()
+        }
 
 
+
+    }
+
+    private fun logon() {
+        var providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build()
+        )
+        startActivityForResult(
+                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+        )
     }
 
     private fun saveReview() {
@@ -140,6 +157,8 @@ class MainFragment : Fragment() {
                 Log.d( "Firebase", "Save Failed")
             }
     }
+
+
 
     private fun prepRequestLocationUpdates() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -237,6 +256,8 @@ class MainFragment : Fragment() {
                     val bitmap = ImageDecoder.decodeBitmap(source)
                             imgFood.setImageBitmap(bitmap)
                 }
+            } else if(requestCode == AUTH_REQUEST_CODE){
+                    user = FirebaseAuth.getInstance().currentUser
             }
         }
     }
@@ -251,6 +272,7 @@ class MainFragment : Fragment() {
         }
 
     }
+
 
 
 }
