@@ -36,7 +36,6 @@ import java.util.*
 
 
 class MainFragment : Fragment() {
-
     private val IMAGE_GALLERY_REQUEST_CODE: Int = 2001
     private val SAVE_IMAGE_REQUEST_CODE: Int = 1999
     private val CAMERA_REQUEST_CODE = 1998
@@ -46,8 +45,6 @@ class MainFragment : Fragment() {
     private lateinit var currentPhotoPath: String
     private val AUTH_REQUEST_CODE = 2002
     private var user : FirebaseUser? = null
-
-
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -55,17 +52,14 @@ class MainFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
-
     private lateinit var viewModel: MainViewModel
     private lateinit var locationViewModel: LocationViewModel
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.main_fragment01, container, false)
 
 
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //still need to create JSON to populate autocomplete search bar
@@ -111,7 +105,6 @@ class MainFragment : Fragment() {
             btnProfile. visibility = VISIBLE
             spnReviews.visibility = VISIBLE
         }
-
         prepRequestLocationUpdates()
         btnSave.setOnClickListener(){
             saveReview()
@@ -119,20 +112,16 @@ class MainFragment : Fragment() {
         btnProfile.setOnClickListener(){
             logon()
         }
-
-
-
     }
-
     private fun logon() {
         var providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build()
         )
         startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
         )
     }
-
     private fun saveReview() {
         var review = Review().apply{
             latitude = txtLatitude.text.toString()
@@ -145,7 +134,6 @@ class MainFragment : Fragment() {
         save(review)
 
     }
-
     private fun save(review: Review) {
         firestore.collection("reviews")
             .document()
@@ -157,9 +145,6 @@ class MainFragment : Fragment() {
                 Log.d( "Firebase", "Save Failed")
             }
     }
-
-
-
     private fun prepRequestLocationUpdates() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             requestLocationUpdates()
@@ -168,7 +153,6 @@ class MainFragment : Fragment() {
             requestPermissions(permissionRequest, LOCATION_PERMISSION_REQUEST_CODE)
         }
     }
-
     private fun requestLocationUpdates() {
         locationViewModel = ViewModelProviders.of(this).get(LocationViewModel::class.java)
         locationViewModel.getLocationLiveData()
@@ -177,15 +161,12 @@ class MainFragment : Fragment() {
                 txtLatitude.text = it.latitude
             })
     }
-
-
     private fun prepOpenImageGallery() {
         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply{
             this.type = "image/*"
             startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
         }
     }
-
     private fun prepTakePhoto() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
             takePhoto()
@@ -194,8 +175,6 @@ class MainFragment : Fragment() {
             requestPermissions(permissionRequest, CAMERA_PERMISSION_REQUEST_CODE)
         }
     }
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -237,8 +216,6 @@ class MainFragment : Fragment() {
             }
         }
     }
-
-
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -261,7 +238,6 @@ class MainFragment : Fragment() {
             }
         }
     }
-
     private fun createImageFile(): File {
         //generate a new filename with the date
         val timestamp: String = SimpleDateFormat("yyyMMdd_HHmmss").format(Date())
@@ -272,7 +248,4 @@ class MainFragment : Fragment() {
         }
 
     }
-
-
-
 }

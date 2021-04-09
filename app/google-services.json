@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1002049205375-p31fkt15j1pi59ne4mjhidt26ma9e4bf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ranchratings_12",
+            "certificate_hash": "8a1aee687de083426cfd86911238f74120037b7e"
+          }
+        },
+        {
           "client_id": "1002049205375-gsg6gtmamhtk8vv20cue1i5gl72qo197.apps.googleusercontent.com",
           "client_type": 3
         }
