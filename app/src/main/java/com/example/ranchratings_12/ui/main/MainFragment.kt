@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -23,6 +24,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.ranchratings_12.R
+import com.example.ranchratings_12.dtos.Photo
 import com.example.ranchratings_12.dtos.Review
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +35,7 @@ import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainFragment : Fragment() {
@@ -45,6 +48,8 @@ class MainFragment : Fragment() {
     private lateinit var currentPhotoPath: String
     private val AUTH_REQUEST_CODE = 2002
     private var user : FirebaseUser? = null
+    private var photos : ArrayList<Photo> = ArrayList<Photo>()
+    private var photoURI : Uri? = null
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -123,28 +128,50 @@ class MainFragment : Fragment() {
         )
     }
     private fun saveReview() {
+        var reviewIDCounter = 0
         var review = Review().apply{
+            reviewIDCounter += 1
             latitude = txtLatitude.text.toString()
             longitutde = txtLongitude.text.toString()
             institutionName = txtInstitutionName.text.toString()
             reviewText = txtReview2.text.toString()
             rating = ratingBar2.numStars.toDouble()
             userID
+            reviewID = firestore.collection("reviews").document().id
         }
-        save(review)
+        save(review, photos)
+
+        review = Review()
+        photos = ArrayList<Photo>()
 
     }
-    private fun save(review: Review) {
-        firestore.collection("reviews")
-            .document()
-            .set(review)
-            .addOnSuccessListener {
+    private fun save(review: Review, photos: ArrayList<Photo>) {
+        val document = firestore.collection("reviews").document()
+        review.reviewID = document.id
+        val set = document.set(review)
+        .addOnSuccessListener {
                 Log.d("Firebase", "Document saved")
+                if(photos != null && photos.size > 0){
+                    savePhotos(review, photos)
+                }
             }
             .addOnFailureListener{
                 Log.d( "Firebase", "Save Failed")
             }
     }
+
+    private fun savePhotos(review: Review, photos: ArrayList<Photo>) {
+        val collection = firestore.collection("reviews")
+                .document(review.reviewID)
+                .collection("photos")
+        photos.forEach {
+            photo -> val task = collection.add(photo)
+            task.addOnSuccessListener {
+                photo.id = it.id
+            }
+        }
+    }
+
     private fun prepRequestLocationUpdates() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             requestLocationUpdates()
@@ -209,13 +236,15 @@ class MainFragment : Fragment() {
                 //if we are here we have a valid intent
                 val photoFile:File = createImageFile()
                 photoFile?.also{
-                    val photoURI = FileProvider.getUriForFile(activity!!.applicationContext, "com.ranchratings_12.android.fileprovider", it)
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+                    photoURI = FileProvider.getUriForFile(activity!!.applicationContext, "com.ranchratings_12.android.fileprovider", it)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
                 }
             }
         }
     }
+
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -226,6 +255,8 @@ class MainFragment : Fragment() {
                 imgFood.setImageBitmap(imageBitmap)
             }else if(requestCode == SAVE_IMAGE_REQUEST_CODE){
                     Toast.makeText(context, "Image Saved", Toast.LENGTH_LONG).show()
+                    var photo = Photo(localUri = photoURI.toString())
+                    photos.add(photo)
             }else if (requestCode == IMAGE_GALLERY_REQUEST_CODE){
                 if (data != null && data.data != null){
                     val image = data.data
