@@ -6,4 +6,7 @@
     <string name="profile_create_account">Create Account</string>
     <string name="main_heading">Ranch Ratings</string>
     <string name="main_see_more">See What\'s Good</string>
+    <string name="details_heading">Ranch Details</string>
+    <string name="details_name_label">Ranch Name:</string>
+    <string name="detail_rating_label">Ranch Rating:</string>
 </resources>
