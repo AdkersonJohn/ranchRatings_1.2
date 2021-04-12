@@ -9,4 +9,5 @@
     <string name="details_heading">Ranch Details</string>
     <string name="details_name_label">Ranch Name:</string>
     <string name="detail_rating_label">Ranch Rating:</string>
+    <string name="detail_description_label">Ranch Description:</string>
 </resources>
