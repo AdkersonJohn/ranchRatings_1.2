@@ -63,4 +63,5 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation "androidx.multidex:multidex:2.0.1"
     implementation "com.firebaseui:firebase-ui-auth:6.2.0"
+    implementation "com.google.firebase:firebase-storage:19.2.2"
 }

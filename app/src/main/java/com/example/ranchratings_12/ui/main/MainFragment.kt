@@ -2,6 +2,7 @@ package com.example.ranchratings_12.ui.main
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.main_fragment01.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -50,6 +52,7 @@ class MainFragment : Fragment() {
     private var user : FirebaseUser? = null
     private var photos : ArrayList<Photo> = ArrayList<Photo>()
     private var photoURI : Uri? = null
+    private var storageReference = FirebaseStorage.getInstance().getReference()
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -122,6 +125,11 @@ class MainFragment : Fragment() {
     }
 
     private fun saveReview() {
+        if(user == null){
+            logon()
+        }
+        user ?: return
+
         var reviewIDCounter = 0
         var review = Review().apply{
             reviewIDCounter += 1
@@ -133,20 +141,20 @@ class MainFragment : Fragment() {
             userID
             reviewID = firestore.collection("reviews").document().id
         }
-        save(review, photos)
+        save(review, photos, user!!)
 
         review = Review()
         photos = ArrayList<Photo>()
 
     }
-    private fun save(review: Review, photos: ArrayList<Photo>) {
+    private fun save(review: Review, photos: ArrayList<Photo>, user: FirebaseUser) {
         val document = firestore.collection("reviews").document()
         review.reviewID = document.id
         val set = document.set(review)
         .addOnSuccessListener {
                 Log.d("Firebase", "Document saved")
                 if(photos != null && photos.size > 0){
-                    savePhotos(review, photos)
+                    savePhotos(review, photos, user)
                 }
             }
             .addOnFailureListener{
@@ -154,7 +162,7 @@ class MainFragment : Fragment() {
             }
     }
 
-    private fun savePhotos(review: Review, photos: ArrayList<Photo>) {
+    private fun savePhotos(review: Review, photos: ArrayList<Photo>, user: FirebaseUser) {
         val collection = firestore.collection("reviews")
                 .document(review.reviewID)
                 .collection("photos")
@@ -162,8 +170,38 @@ class MainFragment : Fragment() {
             photo -> val task = collection.add(photo)
             task.addOnSuccessListener {
                 photo.id = it.id
+                uploadPhotos(review, photos, user)
             }
         }
+    }
+
+    private fun uploadPhotos(review: Review, photos: java.util.ArrayList<Photo>, user: FirebaseUser) {
+        photos.forEach {
+            photo ->
+            var uri = Uri.parse(photo.localUri)
+            val imageRef = storageReference.child("images/" + user.uid + "/" + uri.lastPathSegment)
+            val uploadTask = imageRef.putFile(uri)
+            uploadTask.addOnSuccessListener {
+                val downloadUrl = imageRef.downloadUrl
+                downloadUrl.addOnSuccessListener {
+                    photo.remoteUri = it.toString()
+                    //update our cloud firestore with public image URI
+                    updatePhotoDatabase(review, photo)
+                }
+
+            }
+            uploadTask.addOnFailureListener {
+                Log.e(TAG, it.message.toString())
+            }
+        }
+    }
+
+    private fun updatePhotoDatabase(review: Review, photo: Photo) {
+        firestore.collection("reviews")
+            .document(review.reviewID)
+            .collection("photos")
+            .document(photo.id)
+            .set(photo)
     }
 
     private fun prepRequestLocationUpdates() {
