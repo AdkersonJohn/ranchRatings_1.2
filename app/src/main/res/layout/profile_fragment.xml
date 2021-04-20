@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/btnProfileReturn"
+            android:id="@+id/btnDetailsReturn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/ic_return" />
 
         <TextView
-            android:id="@+id/lblProfileHeading"
+            android:id="@+id/lblDetailsHeading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
