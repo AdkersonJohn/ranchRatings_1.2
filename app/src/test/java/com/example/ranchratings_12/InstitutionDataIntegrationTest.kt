@@ -15,7 +15,7 @@ import org.junit.rules.TestRule
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class InstitutionDataintegrationTest {
+class InstitutionDataIntegrationTest {
     @get: Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm:MainViewModel
@@ -32,7 +32,7 @@ class InstitutionDataintegrationTest {
         mvm.fetchInstitutions("Texas Roadhouse")
     }
     private fun thenResultContainsTexasRoadhouse() {
-        var texasRoadhouseFound = false;
+        var texasRoadhouseFound = false
         mvm.institutions.observeForever{
             //here is where we do the observing
             assertNotNull(it)

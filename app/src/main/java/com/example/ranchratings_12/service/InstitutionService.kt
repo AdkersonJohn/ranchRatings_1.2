@@ -12,7 +12,7 @@ class InstitutionService {
 
 
     fun fetchInstitutions(institutionName: String): MutableLiveData<ArrayList<Institution>>{
-        var _institutions = MutableLiveData<ArrayList<Institution>>()
+        var institutions = MutableLiveData<ArrayList<Institution>>()
 
         val service = RetrofitClientInstance.retrofitInstance?.create(IInstitutionDAO::class.java)
         val call = service?.getAllInstitutions()
@@ -26,7 +26,7 @@ class InstitutionService {
                 call: Call<ArrayList<Institution>>,
                 response: Response<ArrayList<Institution>>
             ) {
-                _institutions.value = response.body()
+                institutions.value = response.body()
             }
 
         })
@@ -34,7 +34,7 @@ class InstitutionService {
 
 
 
-        return _institutions
+        return institutions
     }
 
 }

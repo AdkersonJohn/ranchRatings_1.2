@@ -26,7 +26,7 @@ class InstitutionDataUnitTest {
     var institutionService = mockk<InstitutionService>()
 
     @Test
-    fun searchForTexasRoadhouse_returnsTexasRoadhouse(){
+    fun searchForTexasRoadhouse_returnsTexasRoadhouse() {
         givenAFeedOfMockedInstitutionDataAreAvailable()
         whenSearchForTexasRoadhouse()
         thenResultContainsTexasRoadhouse()
@@ -55,7 +55,7 @@ class InstitutionDataUnitTest {
     }
 
     private fun createMockData() {
-        var allinstitutionsLiveData = MutableLiveData<ArrayList<Institution>>()
+        var allInstitutionsLiveData = MutableLiveData<ArrayList<Institution>>()
         var allInstitutions = ArrayList<Institution>()
         //create and add institutions to our collection
         var texasRoadhouse = Institution( "Texas Roadhouse","375 Rivers Edge Dr, Milford, OH 45150","5138319700" )
@@ -64,14 +64,14 @@ class InstitutionDataUnitTest {
         allInstitutions.add(moes)
         var laMexicana = Institution( "La Mexicana","642 Monmouth St, Newport, KY 41071","8592616112" )
         allInstitutions.add(laMexicana)
-        allinstitutionsLiveData.postValue(allInstitutions)
-        every{institutionService.fetchInstitutions(or("Texas Roadhouse", "5132326400"))} returns allinstitutionsLiveData
+        allInstitutionsLiveData.postValue(allInstitutions)
+        every{institutionService.fetchInstitutions(or("Texas Roadhouse", "5132326400"))} returns allInstitutionsLiveData
         every{institutionService.fetchInstitutions(not(or("Texas Roadhouse", "5132326400")))} returns MutableLiveData<ArrayList<Institution>>()
         mvm.institutionService = institutionService
     }
 
     @Test
-    fun searchForGarbage_returnsNothing(){
+    fun searchForGarbage_returnsNothing() {
         givenAFeedOfMockedInstitutionDataAreAvailable()
         whenISearchForGarbage()
         thenIGetZeroResults()
