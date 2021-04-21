@@ -38,7 +38,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
+//this is where the majority of the fun takes place
+//this is where all attributes and functions used within the main fragment will be housed
 
 class MainFragment : Fragment() {
     private val IMAGE_GALLERY_REQUEST_CODE: Int = 2001

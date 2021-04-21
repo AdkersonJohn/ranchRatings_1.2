@@ -11,7 +11,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 
 class LocationLiveData(context: Context): LiveData<LocationDetails>() {
-
+//the sole purpose of this class is to derive the GPS locational data from the user for use by the app
     private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
     override fun onInactive(){

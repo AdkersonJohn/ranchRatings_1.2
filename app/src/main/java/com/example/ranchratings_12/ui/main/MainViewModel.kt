@@ -12,9 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 
 class MainViewModel : ViewModel() {
 
-
+//this serves a model of data via which the main fragment will derive some of its information from
     private var _institutions: MutableLiveData<ArrayList<Institution>> = MutableLiveData<ArrayList<Institution>>()
-    private var institutionService: InstitutionService = InstitutionService()
+    var institutionService: InstitutionService = InstitutionService()
     private var _reviews: MutableLiveData<ArrayList<Review>> = MutableLiveData<ArrayList<Review>>()
     private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
 

@@ -9,7 +9,8 @@ import androidx.core.view.GestureDetectorCompat
 import com.example.ranchratings_12.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
-
+//this is what the main fragment rests upon
+    //this starts the app up and also deals with swipe events
     private  lateinit var detector: GestureDetectorCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {

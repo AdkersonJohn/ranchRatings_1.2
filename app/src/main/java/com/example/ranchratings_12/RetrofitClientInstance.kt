@@ -2,7 +2,7 @@ package com.example.ranchratings_12
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+//this helps our app parse JSON data to aid in the autocomplete text view search bar
 object RetrofitClientInstance {
     private var retrofit: Retrofit? = null
     private const val BASE_URL = "https://www.JSONLocation.com"

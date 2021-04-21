@@ -9,7 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class InstitutionService {
-
+//this service class helps point our autocomplete text view to the necessary JSON file hosted on Github
 
     fun fetchInstitutions(institutionName: String): MutableLiveData<ArrayList<Institution>>{
         var institutions = MutableLiveData<ArrayList<Institution>>()
