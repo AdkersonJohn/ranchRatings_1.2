@@ -15,7 +15,7 @@ class EventFragment : Fragment() {
     }
 
     private lateinit var viewModel: EventViewModel
-
+//access the event fragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.event_fragment, container, false)

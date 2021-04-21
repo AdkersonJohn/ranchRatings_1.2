@@ -12,8 +12,9 @@ class InstitutionService {
 //this service class helps point our autocomplete text view to the necessary JSON file hosted on Github
 
     fun fetchInstitutions(institutionName: String): MutableLiveData<ArrayList<Institution>>{
+        //create a array to hold the json data
         var institutions = MutableLiveData<ArrayList<Institution>>()
-
+//call the retrofit to access target site hosting JSON
         val service = RetrofitClientInstance.retrofitInstance?.create(IInstitutionDAO::class.java)
         val call = service?.getAllInstitutions()
         call?.enqueue(object: Callback<ArrayList<Institution>>{
@@ -33,7 +34,7 @@ class InstitutionService {
 
 
 
-
+//returns arraylist populated with institution data
         return institutions
     }
 
